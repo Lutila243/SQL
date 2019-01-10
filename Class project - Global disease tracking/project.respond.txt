@@ -1,0 +1,1101 @@
+
+****************************************************************************************
+3.
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_PATIENT';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_ENCOUNTER';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_ENCOUNTER_AFTER_EFFECT';
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_AFTER_EFFECT';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_HEALTH_PROFESSION';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_CASE';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_OUTCOME';
+
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_EXHIBITED_SYMPTOM';
+
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_TRAVEL_DESTINATION';
+
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_LOCATION';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_CAT_EVENT';
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_DISEASE';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_SYMPTOM_LIST';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_REGION';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_COUNTRY';
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_DISEASE_TYPE';
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM   user_constraints
+WHERE Table_Name = 'C_EXPECTED_SYMPTOM';
+
+
+
+*****************************************************************************************
+3.
+
+DESC c_patient;
+
+DESC c_encounter;
+
+DESC c_encounter_after_effect;
+
+DESC c_after_effect;
+
+DESC c_health_profession;
+
+DESC c_case;
+
+DESC c_outcome;
+
+DESC c_exhibited_symptom;
+
+DESC c_travel_destination;
+
+DESC c_location;
+
+DESC c_cat_event;
+
+DESC c_disease;
+
+DESC c_symptom_list;
+
+DESC c_region;
+
+DESC c_country;
+
+DESC c_disease_type;
+
+DESC c_expected_symptom;
+
+
+********************************************************
+3.
+
+
+SELECT *
+FROM c_patient;
+
+
+SELECT *
+FROM c_encounter;
+
+
+SELECT *
+FROM c_encounter_after_effect;
+
+
+
+SELECT *
+FROM c_after_effect;
+
+
+SELECT *
+FROM c_health_profession;
+
+SELECT *
+FROM c_case;
+
+SELECT *
+FROM c_outcome;
+
+SELECT *
+FROM c_exhibited_symptom;
+
+SELECT *
+FROM c_travel_destination;
+
+SELECT *
+FROM c_location;
+
+SELECT *
+FROM c_disease;
+
+SELECT *
+FROM c_symptom_list;
+
+
+SELECT *
+FROM c_region;
+
+SELECT *
+FROM c_country;
+
+SELECT *
+FROM c_disease_type;
+
+SELECT *
+FROM c_expected_symptom;
+
+
+
+******************************************************
+5.
+
+UPDATE c_location
+set latitude = '';
+
+UPDATE c_location
+set longitude = '';
+
+
+ALTER TABLE c_location
+MODIFY (longitude NUMBER(13, 6));
+
+ALTER TABLE c_location
+MODIFY (latitude NUMBER(13, 6));
+
+
+**************************************************************************
+CREATE TABLE c_patient
+(patient_id NUMBER(6),
+date_of_birth DATE,
+gender CHAR(1),
+blood_type VARCHAR(5),
+ethnicity VARCHAR(15));
+
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_id_pk PRIMARY KEY (patient_id);
+
+ALTER TABLE c_patient
+  MODIFY (blood_type NOT NULL);
+
+ALTER TABLE c_patient
+  MODIFY (ethnicity NOT NULL);
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_gender_ck CHECK (gender IN('M', 'F', 'T'));
+
+
+*****************************************************************************
+
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_ethni_ck CHECK (ethnicity IN('ASIAN', 'BLACK', 'HISPANIC', 'LATINO', 'WHITE','NATIVE_AMERICAN', 'WHITE', 'OTHER' ));
+
+
+
+UPDATE c_location
+SET latitude = 25.584531
+WHERE location_id = 2000;
+
+
+UPDATE c_location
+SET longitude = -80.323444
+WHERE location_id = 2000;
+
+
+
+
+
+UPDATE c_location
+SET latitude = 25.584531
+WHERE location_id = 2001;
+
+
+UPDATE c_location
+SET longitude = -80.323444
+WHERE location_id = 2001;
+
+
+UPDATE c_location
+SET latitude = 19.234567     
+WHERE location_id = 2002;
+
+
+UPDATE c_location
+SET longitude = -55.323475  
+WHERE location_id = 2002;
+
+
+
+UPDATE c_location
+SET latitude = 12.3445398     
+WHERE location_id = 2003;
+
+
+UPDATE c_location
+SET longitude = -80.323444
+WHERE location_id = 2003;
+
+
+UPDATE c_location
+SET latitude = 42.262631     
+WHERE location_id = 2004;
+
+
+UPDATE c_location
+SET longitude = -71.802344
+WHERE location_id = 2004;
+
+
+
+UPDATE c_location           
+SET latitude = 10.584531
+WHERE location_id = 2005;
+
+
+UPDATE c_location
+SET longitude = -76.343447
+WHERE location_id = 2005;
+
+
+
+
+UPDATE c_location            
+SET latitude = 19.234567
+WHERE location_id = 2006;
+
+
+UPDATE c_location
+SET longitude = -55.323475
+WHERE location_id = 2006;
+
+
+
+UPDATE c_location
+SET latitude = 9.584531
+WHERE location_id = 2007;   
+
+
+UPDATE c_location
+SET longitude = -53.323444
+WHERE location_id = 2007;
+
+
+
+UPDATE c_location
+SET latitude = 17.234567     
+WHERE location_id = 2008;
+
+
+UPDATE c_location
+SET longitude = -44.323475   
+WHERE location_id = 2008;
+
+
+
+UPDATE c_location
+SET latitude = 36.584531     
+WHERE location_id = 2009;
+
+
+UPDATE c_location
+SET longitude = -76.323444
+WHERE location_id = 2009;
+
+
+
+
+UPDATE c_location            
+SET latitude = 42.262631
+WHERE location_id = 2010;
+
+
+UPDATE c_location
+SET longitude = -71.802344
+WHERE location_id = 2010;
+
+
+
+UPDATE c_location
+SET latitude = 29.584531     
+WHERE location_id = 2011;
+
+
+UPDATE c_location
+SET longitude = -70.323444
+WHERE location_id = 2011;
+
+
+UPDATE c_location
+SET latitude = 11.584531     
+WHERE location_id = 2012;
+
+
+UPDATE c_location
+SET longitude = -50.323444
+WHERE location_id = 2012;
+
+
+
+UPDATE c_location
+SET latitude = 37.262631      
+WHERE location_id = 2013;
+
+
+UPDATE c_location
+SET longitude = -87.802344
+WHERE location_id = 2013;
+
+
+UPDATE c_location
+SET latitude = 8.584531       
+WHERE location_id = 2014;
+
+
+UPDATE c_location
+SET longitude = -2.323444
+WHERE location_id = 2014;
+
+
+
+UPDATE c_location
+SET latitude = 21.234567        
+WHERE location_id = 2015;
+
+
+UPDATE c_location
+SET longitude = -56.323475
+WHERE location_id = 2015;
+
+*********************************************************************************
+6.
+
+
+DELETE FROM c_patient
+where patient_id = 111;
+
+DELETE FROM c_encounter
+where patient_id = 511;
+
+
+DELETE FROM c_after_effect
+where patient_id = 711;
+
+DELETE FROM c_health_profession
+where patient_id = 911;
+
+DELETE FROM c_case
+where patient_id = 311;
+
+DELETE FROM c_outcome
+where patient_id = 1111;
+
+DELETE FROM c_location
+where patient_id = 2011;
+
+DELETE FROM c_cat_event
+where patient_id = 1711;
+
+DELETE FROM c_disease
+where patient_id = 1511;
+
+DELETE FROM c_symptom_list
+where patient_id = 1311;
+
+DELETE FROM c_region
+where patient_id = 2111;
+
+DELETE FROM c_country
+where patient_id = 2311;
+
+DELETE FROM c_disease_type
+where patient_id = 2511;
+
+***************************************************
+7.a
+
+
+CREATE  SEQUENCE c_patient_patient#_seq
+INCREMENT BY 1
+START WITH 116
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_encounter_encounter#_seq
+INCREMENT BY 1
+START WITH 516
+NOCACHE
+NOCYCLE;
+
+
+CREATE  SEQUENCE c_after_effect_after_effect#_seq
+INCREMENT BY 1
+START WITH 716
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_health_profession_health_profession_#_seq
+INCREMENT BY 1
+START WITH 916
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_case_casel#_seq
+INCREMENT BY 1
+START WITH 316
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_outcome_outcome#_seq
+INCREMENT BY 1
+START WITH 1116
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_location_location#_seq
+INCREMENT BY 1
+START WITH 2016
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_cat_event_cat_event#_seq
+INCREMENT BY 1
+START WITH 1716
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_disease_diseasel#_seq
+INCREMENT BY 1
+START WITH 1516
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_symptom_list_symptom_list#_seq
+INCREMENT BY 1
+START WITH 1316
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_region_region#_seq
+INCREMENT BY 1
+START WITH 2116
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_country_country#_seq
+INCREMENT BY 1
+START WITH 2316
+NOCACHE
+NOCYCLE;
+
+
+
+CREATE  SEQUENCE c_disease_type_disease_type#_seq
+INCREMENT BY 1
+START WITH 2516
+NOCACHE
+NOCYCLE;
+
+
+*****************
+.7b
+
+ALTER SEQUENCE c_patient_patient#_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_encounter_encounter#_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_after_effect_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_health_profession_seq
+INCREMENT BY 1;
+
+
+
+
+ALTER SEQUENCE c_case_casel#_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_outcome_outcome#_seq
+INCREMENT BY 1;
+
+
+
+
+ALTER SEQUENCE c_location_location#_seq
+INCREMENT BY 1;
+
+
+ALTER SEQUENCE c_cat_event_cat_event#_seq
+INCREMENT BY 1;
+
+
+ALTER SEQUENCE c_disease_diseasel#_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_symptom_list_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_region_region#_seq
+INCREMENT BY 1;
+
+
+
+ALTER SEQUENCE c_country_country#_seq
+INCREMENT BY 1;
+
+
+ALTER SEQUENCE c_disease_type_seq
+INCREMENT BY 1;
+
+
+*************************************************************************************
+.8a
+
+CREATE INDEX c_country_name_idx
+  ON c_country(name);
+
+CREATE INDEX c_patient_ethnicity_idx
+  ON c_patient(ethnicity);
+
+
+CREATE INDEX c_encounter_weight_idx
+  ON c_encounter(weight);
+
+
+CREATE INDEX c_after_effect_name_idx
+  ON c_after_effect(name);
+
+CREATE INDEX c_health_profession_phone_idx
+  ON c_health_profession(phone);
+
+
+CREATE INDEX c_case_reported_idx
+  ON c_case(reported_by);
+
+CREATE INDEX c_outcome_date_idx
+  ON c_outcome(o_date);
+
+
+CREATE INDEX c_travel_start_date_idx
+  ON c_travel_destination(start_date);
+
+
+CREATE INDEX c_location_state_idx
+  ON c_location(state_or_Provinces);
+
+
+CREATE INDEX c_cat_event_date_idx
+  ON c_cat_event(e_date);
+
+
+
+CREATE INDEX c_disease_name_idx
+  ON c_disease(name);
+
+CREATE INDEX c_symptom_name_idx
+  ON c_symptom_list(name);
+
+
+CREATE INDEX c_region_climat_idx
+  ON c_region(climat);
+
+CREATE INDEX c_disease_name_idx
+  ON c_disease_type(name);
+
+*******************************
+.8b
+
+CREATE BITMAP INDEX c_patient_blood_type_idx
+  ON c_patient(blood_type);
+
+
+
+
+**********************************
+.8c
+
+CREATE INDEX c_case_contract_report_idx
+  ON c_case(date_contracted - date_reported);
+
+
+********************************************
+
+
+
+
+
+
+CREATE INDEX c_patient_ethnicity_idx
+  ON c_patient(ethnicity);
+
+
+CREATE INDEX c_encounter_weight_idx
+  ON c_encounter(weight);
+
+
+CREATE INDEX c_after_effect_name_idx
+  ON c_after_effect(name);
+
+CREATE INDEX c_health_profession_phone_idx
+  ON c_health_profession(phone);
+
+
+CREATE INDEX c_case_reported_idx
+  ON c_case(reported_by);
+
+CREATE INDEX c_outcome_date_idx
+  ON c_outcome(o_date);
+
+
+CREATE INDEX c_travel_start_date_idx
+  ON c_travel_destination(start_date);
+
+
+CREATE INDEX c_location_state_idx
+  ON COUNTRY(state_or_Provinces);
+
+
+CREATE INDEX c_cat_event_date_idx
+  ON c_cat_event(e_date);
+
+
+
+CREATE INDEX c_disease_name_idx
+  ON c_disease(name);
+
+CREATE INDEX c_symptom_name_idx
+  ON c_symptom_list(name);
+
+
+CREATE INDEX c_region_climat_idx
+  ON c_region(climat);
+
+CREATE INDEX c_country_name_idx
+  ON c_country(name);
+
+CREATE INDEX c_disease_name_idx
+  ON c_disease_type(name);
+
+
+
+***************************************************************************
+
+
+/*9A WHERE CLAUSE, 9B BETWEEN AND OPERATOR, 11Dd TO_DATE FUNCTION, 9Ga SECONDARY SORT IN ORDER BY CLAUSE  */
+
+
+SELECT date_of_birth, patient_id, gender, blood_type
+  FROM c_patient
+  WHERE date_of_birth BETWEEN TO_DATE('JANUARY 01, 79','MONTH DD, YY') AND TO_DATE('DECEMBER 31, 94','MONTH DD, YY')
+  ORDER BY date_of_birth DESC, gender;
+
+
+
+.9b
+
+
+SELECT patient_id,Blood_type, gender
+  FROM c_patient
+  WHERE Blood_type IN ('A','O')
+  OR gender='F'
+  ORDER BY 1 DESC;
+
+
+**************************************************************
+.10A
+
+
+SELECT patient_id, name
+	FROM c_patient CROSS JOIN c_country;
+
+**************************************************
+
+.10B
+
+
+
+SELECT location_id, case_id, point_of_infection
+	FROM c_location NATURAL JOIN c_travel_destination;
+
+
+********************************************************************
+.10C
+
+
+SELECT patient_id, blood_pressure
+	FROM c_patient JOIN c_encounter
+	ON e_date > date_of_birth;
+
+
+**********************************************************************
+.10D
+
+SELECT h.first_name, h.last_name, p.last_name
+	FROM c_health_profession h JOIN c_health_profession p 
+	ON p.health_profession_id = h.health_profession_id;
+
+************************************************************************
+
+.10E
+
+
+SELECT last_name, first_name, location_id
+	FROM c_location l FULL OUTER JOIN c_health_profession h 
+	USING (location_id);
+
+*****************************************************************************
+AAAAAA
+.11A
+
+
+SELECT LOWER(first_name), LOWER(last_name)
+FROM c_health_profession
+WHERE LOWER(last_name) = 'nyapilah';
+
+
+
+
+
+
+********************************************
+.11B
+
+SELECT UPPER(first_name), UPPER(last_name)
+FROM c_health_profession
+WHERE UPPER(last_name) = 'MOTEP';
+
+*************************************************
+
+.11C
+
+
+SELECT INITCAP(first_name) "First Name", INITCAP(last_name) "Last Name"
+FROM  c_health_profession
+WHERE last_name = 'hannibal';
+
+******************************************************************************
+BBBBBBBB
+
+.11A
+
+SELECT SUBSTR(last_name,1,3)
+	FROM c_health_profession;
+
+
+
+
+
+
+*************************************************
+.11B
+
+
+SELECT form_of_transmission, INSTR(form_of_transmission, 'a') "First a",
+             INSTR(form_of_transmission, 'a', 2) "Start read position 2",
+             INSTR(form_of_transmission, 'a', 1, 2) "Second a"
+FROM c_disease;
+
+
+*******************************************************
+
+.11C
+
+
+SELECT user_id,LENGTH(password)
+	FROM c_health_profession;
+
+
+***********************************************************
+
+.11d
+
+
+SELECT first_name, LPAD(first_name, 12, ' '), RPAD(first_name, 12, '*')
+FROM c_health_profession
+WHERE first_name LIKE 'c%';
+
+
+**********************************************************************
+
+.11e
+
+
+
+SELECT gender, ethnicity, LTRIM(ethnicity, 'NATIVE')
+FROM c_patient
+WHERE patient_id = 103;
+
+
+SELECT last_name, email,RTRIM(email, 'drc')
+FROM c_health_profession;
+
+******************************************************************************
+
+.11F
+SELECT climat, REPLACE(climat, 'TRP', 'TROPICAL')
+FROM c_region
+WHERE climat = 'TRP';
+
+
+*****************************************************************************
+
+.11G
+
+
+SELECT city, TRANSLATE(city, 'a', 'v'), TRANSLATE(city, 'i', '-i')
+FROM c_location;
+
+
+
+*******************************************************************************
+
+.11h
+
+
+SELECT first_name, last_name,
+        CONCAT('Customer number: ', health_profession_id) "Number"
+ FROM c_health_profession;
+
+*********************************************************************************
+
+
+CCCCCCCCCCCCCC
+
+
+.11a
+
+SELECT state_or_provinces, latitude, ROUND(latitude,1), ROUND(latitude,0), ROUND(latitude, -1)
+FROM c_location;
+
+
+*********************************************
+
+11b
+
+SELECT city, longitude, TRUNC(longitude,1), TRUNC(longitude,0), TRUNC(longitude, -1)
+FROM c_location;
+
+**********************
+
+11c
+
+SELECT  235/16
+FROM DUAL;
+
+SELECT TRUNC(235/16,0) LBS, MOD(235,16) OZ
+FROM DUAL;
+
+
+**************************
+
+11d
+
+SELECT start_date, SYSDATE, ROUND(start_date-SYSDATE) "Days",
+        ABS(ROUND(start_date-SYSDATE)) "ABS Days"
+FROM c_travel_destination;
+
+
+
+****************************
+
+11e
+
+
+SELECT POWER(patient_id, 3)
+	FROM c_patient;
+
+
+
+*****************************************************************
+
+
+dddddddddddddddddddddddddd
+
+
+11c
+
+SELECT case_id, patient_id, date_contracted, LAST_DAY(ADD_MONTHS(date_contracted,3) )"EXPECTED CLOSE DATE"
+	FROM c_case;
+
+SELECT case_id, patient_id, date_contracted, NEXT_DAY(ADD_MONTHS(date_contracted,3), 'MONDAY' )"EXPECTED CLOSE DATE"
+	FROM c_case;
+
+11A
+
+SELECT case_id, TRUNC(MONTHS_BETWEEN(date_reported,e_date),0) MTHS
+FROM c_case JOIN c_cat_event USING (cat_event_id);
+
+
+11D
+
+
+SELECT case_id, date_reported, date_closed
+FROM c_case
+WHERE date_reported = TO_DATE('March 19, 2016','Month DD, YYYY');
+
+
+
+****************************************************************************
+
+
+12c
+
+SELECT COUNT(patient_id) "NUMBER OF PATIENTS"
+	FROM c_patient;
+
+
+************************
+
+12d
+
+SELECT blood_type, MAX(patient_id)
+	FROM c_patient
+	GROUP BY blood_type;
+
+
+*********************************
+
+12E
+
+SELECT blood_type, MIN(patient_id)
+	FROM c_patient
+	GROUP BY blood_type;
+
+*****************************************
+
+13a
+
+SELECT blood_type, patient_id
+	FROM c_patient
+	WHERE patient_id = (SELECT MAX(patient_id)
+FROM c_patient);
+
+
+
+
+*********************
+13b
+
+
+SELECT blood_type, patient_id
+	FROM c_patient
+	WHERE patient_id IN (SELECT patient_id
+FROM c_case);
+
+
+
+
+*********************************************
+
+
+/*SELECT PATIENT WITH MULTIPLE DISEASES*/
+
+
+SELECT patient_id, case_id, disease_id
+	FROM c_patient NATURAL JOIN c_case FULL OUTER JOIN c_disease 
+		USING (disease_id)
+	ORDER BY patient_id DESC;
+
+
+
+*********************************************************
+
+
+
+/*SELECT PATIENTS PER HEALTH PROFESSIONAL GROUPED BY REGION */
+
+SELECT patient_id, health_profession_id, region_id
+	FROM c_case NATURAL JOIN c_health_profession NATURAL JOIN c_location;
+
+********************************************************************
+
+
+/*LIST OF DISEASES WITHIN A REGION */
+ 
+SELECT disease_id, region_id
+	FROM c_disease NATURAL JOIN c_case NATURAL JOIN c_health_profession NATURAL JOIN c_location
+	ORDER BY region_id;
+
+************************************************************************
+
+
+
+/*LIST OF SYMPTOMS AND RELATED DISEASES */
+
+SELECT symptom_list_id, name, description, disease_id
+	FROM c_expected_symptom NATURAL JOIN c_symptom_list; 

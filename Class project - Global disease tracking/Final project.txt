@@ -1,0 +1,595 @@
+
+CREATE TABLE c_patient
+(patient_id NUMBER(6),
+date_of_birth DATE,
+gender CHAR(1),
+blood_type CHAR(3),
+ethnicity CHAR(15));
+
+
+CREATE TABLE c_encounter
+(case_id NUMBER(6),
+encounter_id NUMBER(6),
+height CHAR(4),
+weight CHAR(3),
+blood_pressure CHAR(7),
+e_date DATE);
+
+
+CREATE TABLE c_encounter_after_effect
+(encounter_id NUMBER(6),
+after_effect_id NUMBER(6));
+
+
+
+CREATE TABLE c_after_effect
+(after_effect_id NUMBER(6),
+name VARCHAR2(15),
+description VARCHAR2(30));
+
+
+
+CREATE TABLE c_health_profession
+(location_id NUMBER(6),
+health_profession_id NUMBER(6),
+first_name VARCHAR2(10),
+last_name VARCHAR2(15),
+phone CHAR(10),
+email VARCHAR2(30),
+user_id VARCHAR2(30),
+password VARCHAR2(30));
+
+
+
+CREATE TABLE c_case
+(health_profession_id NUMBER(6),
+patient_id NUMBER(6),
+disease_id NUMBER(6),
+cat_event_id NUMBER(6),
+case_id NUMBER(6),
+date_contracted DATE,
+reported_by VARCHAR2(15),
+date_reported DATE ,
+date_closed DATE);
+
+
+
+CREATE TABLE c_outcome
+(case_id NUMBER(6),
+outcome_id NUMBER(6),
+o_date DATE,
+description VARCHAR2(30));
+
+
+
+CREATE TABLE c_exhibited_symptom
+(encounter_id NUMBER(6),
+symptom_list_id NUMBER(6));
+
+
+
+CREATE TABLE c_travel_destination
+(location_id NUMBER(6),
+case_id NUMBER(6),
+start_date DATE,
+end_date DATE,
+point_of_infection CHAR(1) DEFAULT 'N');
+
+
+
+CREATE TABLE c_location
+(region_id NUMBER(6),
+country_id NUMBER(6),
+location_id NUMBER(6),
+city VARCHAR2(20),
+state_or_provinces VARCHAR2(20),
+latitude NUMBER(13),
+longitude NUMBER(13));
+
+
+
+CREATE TABLE c_cat_event
+(cat_event_id NUMBER(6),
+e_date DATE,
+description VARCHAR2(30));
+
+
+
+
+CREATE TABLE c_disease
+(disease_type_id NUMBER(6),
+disease_id NUMBER(6),
+name VARCHAR2(20),
+form_of_transmission VARCHAR2(20));
+
+
+
+CREATE TABLE c_symptom_list
+(symptom_list_id NUMBER(6),
+name VARCHAR2(15),
+description VARCHAR2(30));
+
+
+
+CREATE TABLE c_region
+(region_id NUMBER(6),
+name VARCHAR2(20),
+geography CHAR(2) DEFAULT 'HL',
+continent CHAR(3) DEFAULT 'AMR',
+climat CHAR(3) DEFAULT 'MLD');
+
+
+
+CREATE TABLE c_country
+(country_id NUMBER(6),
+name VARCHAR2(15),
+health_center_name VARCHAR2(15),
+contact_name VARCHAR2(15),
+contact_phone CHAR(10));
+
+
+CREATE TABLE c_disease_type
+(disease_type_id NUMBER(6),
+name CHAR(4) DEFAULT 'EPID',
+description VARCHAR2(30));
+
+
+
+CREATE TABLE c_expected_symptom
+(symptom_list_id NUMBER(6),
+disease_id NUMBER(6));
+
+
+****************primary keys
+
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_id_pk PRIMARY KEY (patient_id);
+
+
+ALTER TABLE c_encounter
+  ADD CONSTRAINT encounter_id_pk PRIMARY KEY (encounter_id);
+
+
+ALTER TABLE c_after_effect
+  ADD CONSTRAINT after_effect_id_pk PRIMARY KEY (after_effect_id);
+
+ALTER TABLE c_health_profession
+  ADD CONSTRAINT health_profession_id_pk PRIMARY KEY (health_profession_id);
+
+
+ALTER TABLE c_case
+  ADD CONSTRAINT case_id_pk PRIMARY KEY (case_id);
+
+
+ALTER TABLE c_outcome
+  ADD CONSTRAINT outcome_id_pk PRIMARY KEY (outcome_id);
+
+
+ALTER TABLE c_location
+  ADD CONSTRAINT location_id_pk PRIMARY KEY (location_id);
+
+
+ALTER TABLE c_cat_event
+  ADD CONSTRAINT cat_event_id_pk PRIMARY KEY (cat_event_id);
+
+ALTER TABLE c_disease
+  ADD CONSTRAINT disease_id_pk PRIMARY KEY (disease_id);
+
+
+ALTER TABLE c_symptom_list
+  ADD CONSTRAINT symptom_list_id_pk PRIMARY KEY (symptom_list_id);
+
+
+ALTER TABLE c_region
+  ADD CONSTRAINT region_id_pk PRIMARY KEY (region_id);
+
+
+ALTER TABLE c_country
+  ADD CONSTRAINT country_id_pk PRIMARY KEY (country_id);
+
+
+ALTER TABLE c_disease_type
+  ADD CONSTRAINT disease_type_id_pk PRIMARY KEY (disease_type_id);
+
+
+
+*********************foreign keys
+
+
+ALTER TABLE c_encounter
+  ADD CONSTRAINT encounter_case_id_fk FOREIGN KEY (case_id)
+             REFERENCES c_case(case_id);
+
+
+
+ALTER TABLE c_encounter_after_effect
+  ADD CONSTRAINT ectr_afr_ef_enctr_id_fk FOREIGN KEY (encounter_id)
+             REFERENCES c_encounter(encounter_id);
+
+
+
+ALTER TABLE c_encounter_after_effect
+  ADD CONSTRAINT encounter_afr_e_afr_eft_id_fk FOREIGN KEY (after_effect_id)
+             REFERENCES c_after_effect(after_effect_id);
+
+
+
+ALTER TABLE c_health_profession
+  ADD CONSTRAINT health_prof_lct_id_fk FOREIGN KEY (location_id)
+             REFERENCES c_location(location_id);
+
+
+
+ALTER TABLE c_case
+  ADD CONSTRAINT case_health_profession_id_fk FOREIGN KEY (health_profession_id)
+             REFERENCES c_health_profession(health_profession_id);
+
+
+ALTER TABLE c_case
+  ADD CONSTRAINT case_patient_id_fk FOREIGN KEY (patient_id)
+             REFERENCES c_patient(patient_id);
+
+
+ALTER TABLE c_case
+  ADD CONSTRAINT case_disease_id_fk FOREIGN KEY (disease_id)
+             REFERENCES c_disease(disease_id);
+
+
+
+ALTER TABLE c_outcome
+  ADD CONSTRAINT outcome_case_id_fk FOREIGN KEY (case_id)
+             REFERENCES c_case(case_id);
+
+ALTER TABLE c_exhibited_symptom
+  ADD CONSTRAINT exh_s_encounter_id_fk FOREIGN KEY (encounter_id)
+             REFERENCES c_encounter(encounter_id);
+
+
+
+ALTER TABLE c_exhibited_symptom
+  ADD CONSTRAINT exh_s_sympt_list_id_fk FOREIGN KEY (symptom_list_id)
+             REFERENCES c_symptom_list(symptom_list_id);
+
+
+
+ALTER TABLE c_travel_destination
+  ADD CONSTRAINT travel_destination_case_id_fk FOREIGN KEY (case_id)
+             REFERENCES c_case(case_id);
+
+
+
+ALTER TABLE c_travel_destination
+  ADD CONSTRAINT tvl_dest_location_id_fk FOREIGN KEY (location_id)
+             REFERENCES c_location(location_id);
+
+
+
+ALTER TABLE c_location
+  ADD CONSTRAINT location_region_id_fk FOREIGN KEY (region_id)
+             REFERENCES c_region(region_id);
+
+
+ALTER TABLE c_location
+  ADD CONSTRAINT location_country_id_fk FOREIGN KEY (country_id)
+             REFERENCES c_country(country_id);
+
+
+
+ALTER TABLE c_disease
+  ADD CONSTRAINT disease_disease_type_id_fk FOREIGN KEY (disease_type_id)
+             REFERENCES c_disease_type(disease_type_id);
+
+
+
+
+ALTER TABLE c_expected_symptom
+  ADD CONSTRAINT expected_symptom_disease_id_fk FOREIGN KEY (disease_id)
+             REFERENCES c_disease(disease_id);
+
+
+
+ALTER TABLE c_expected_symptom
+  ADD CONSTRAINT expected_sympt_sympt_list_id_fk FOREIGN KEY (symptom_list_id)
+             REFERENCES c_symptom_list(symptom_list_id);
+
+
+
+******************************check keys
+
+
+
+
+ALTER TABLE c_travel_destination
+ADD CONSTRAINT tvl_dest_end_date_ck CHECK(end_date >= start_date);
+
+
+ALTER TABLE c_travel_destination
+  ADD CONSTRAINT tvl_dest_pnt_inf_ck CHECK (point_of_infection IN('Y', 'N'));
+
+
+
+ALTER TABLE c_disease
+ADD CONSTRAINT disease_name_ck CHECK(name IN('HEPATITIS_A', 'HEPATITIS_B', 'HEPATITIS_C', 'FLUX', 'MALARIA', 'YELLOW_FEVER', 'EBOLA', 'ZINGA', 'TUBERCULOSIS', 'BREAST_CANCER', 'LEPROSY', 'DENGUE', 'STROKE', 'AIDS', 'CHIKUNGUNYA', 'INFLUENZA_A', 'RESPIRATORY_SYNDROME'));
+
+
+ALTER TABLE c_symptom_list
+ADD CONSTRAINT symp_lst_name_ck CHECK(name IN('FEVER', 'DIZYNESS,', 'VOMITING', 'TIRED', 'DIARHEA', 'WEIGHT_LOST', 'INSOMNIA', 'ITCHING', 'INFERTILITY' ));
+
+
+ALTER TABLE c_region
+ADD CONSTRAINT region_geo_ck CHECK(geography IN('HL', 'MT', 'SV', 'PL', 'VL', 'DS'));
+
+
+ALTER TABLE c_region
+ADD CONSTRAINT region_cont_ck CHECK(continent IN('AFR', 'AMR', 'EUR', 'ASI', 'OC', 'SOP', 'NOP'));
+
+
+ALTER TABLE c_region
+ADD CONSTRAINT region_climat_ck CHECK(climat IN('DRY', 'TRP', 'POL', 'MLD', 'CNT'));
+
+
+
+ALTER TABLE c_case
+ADD CONSTRAINT case_date_closed_ck CHECK (date_closed >= date_reported);
+
+
+ALTER TABLE c_disease_type
+ADD CONSTRAINT disease_type_name_ck CHECK(name IN('EPID', 'PEND'));
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_gender_ck CHECK (gender IN('M', 'F', 'T'));
+
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_blood_type_ck CHECK (blood_type IN('O+', 'O–', 'A+' ,'A–', 'B+', 'B–', 'AB+', 'AB–'));
+
+
+ALTER TABLE c_patient
+  ADD CONSTRAINT patient_ethni_ck CHECK (ethnicity IN('ASIAN', 'BLACK', 'HISPANIC', 'LATINO', 'WHITE','NATIVE_AMERICAN', 'WHITE', 'OTHER' ));
+
+
+
+ALTER TABLE c_encounter
+  ADD CONSTRAINT encounter_height_ck CHECK (height IN('height' BETWEEN 0 AND 10));
+
+
+
+ALTER TABLE c_encounter
+  ADD CONSTRAINT encounter_weight_ck CHECK (weight IN('weight' BETWEEN 0 AND 999)); 
+
+
+
+
+
+************************ unique constraints
+
+
+
+
+
+ALTER TABLE c_health_profession
+ADD CONSTRAINT health_prof_phone_uk UNIQUE (phone);
+
+
+
+
+ALTER TABLE c_health_profession
+ADD CONSTRAINT health_prof_email_uk UNIQUE (email);
+
+
+ALTER TABLE c_health_profession
+ADD CONSTRAINT health_prof_user_id_uk UNIQUE (user_id);
+
+
+
+ALTER TABLE c_country
+ADD CONSTRAINT country_phone_uk UNIQUE (contact_phone);
+
+
+
+**************************************not null constraint
+
+
+
+ALTER TABLE c_encounter
+  MODIFY (case_id NOT NULL);
+
+
+ALTER TABLE c_encounter_after_effect
+  MODIFY (after_effect_id NOT NULL);
+
+ALTER TABLE c_encounter_after_effect
+  MODIFY (encounter_id NOT NULL);
+
+ALTER TABLE c_health_profession
+  MODIFY (location_id NOT NULL);
+
+ALTER TABLE c_case
+  MODIFY (health_profession_id NOT NULL);
+
+
+ALTER TABLE c_case
+  MODIFY (patient_id NOT NULL);
+
+ALTER TABLE c_case
+  MODIFY (disease_id NOT NULL);
+
+
+ALTER TABLE c_outcome
+  MODIFY (case_id NOT NULL);
+
+
+ALTER TABLE c_exhibited_symptom
+  MODIFY (encounter_id NOT NULL);
+
+
+ALTER TABLE c_exhibited_symptom
+  MODIFY (symptom_list_id NOT NULL);
+
+
+
+ALTER TABLE c_travel_destination
+  MODIFY (case_id NOT NULL);
+
+
+
+ALTER TABLE c_travel_destination
+  MODIFY (location_id NOT NULL);
+
+
+
+ALTER TABLE c_location
+  MODIFY (region_id NOT NULL);
+
+
+
+ALTER TABLE c_location
+  MODIFY (country_id NOT NULL);
+
+
+ALTER TABLE c_disease
+  MODIFY (disease_type_id NOT NULL);
+
+
+
+ALTER TABLE c_expected_symptom
+  MODIFY (disease_id NOT NULL);
+
+
+ALTER TABLE c_expected_symptom
+  MODIFY (symptom_list_id NOT NULL);
+
+ALTER TABLE c_patient
+  MODIFY (date_of_birth NOT NULL);
+
+ALTER TABLE c_patient
+  MODIFY (gender NOT NULL);
+
+ALTER TABLE c_patient
+  MODIFY (blood_type NOT NULL);
+
+ALTER TABLE c_patient
+  MODIFY (ethnicity NOT NULL);
+
+
+ALTER TABLE c_encounter
+  MODIFY (e_date NOT NULL);
+
+
+ALTER TABLE c_after_effect
+  MODIFY (name NOT NULL);
+
+ALTER TABLE c_after_effect
+  MODIFY (description NOT NULL);
+
+
+ALTER TABLE c_health_profession
+  MODIFY (first_name NOT NULL);
+
+ALTER TABLE c_health_profession
+  MODIFY (last_name NOT NULL);
+
+ALTER TABLE c_health_profession
+  MODIFY (user_id NOT NULL);
+
+ALTER TABLE c_health_profession
+  MODIFY (password NOT NULL);
+
+ALTER TABLE c_case
+  MODIFY (date_contracted NOT NULL);
+
+ALTER TABLE c_case
+  MODIFY (reported_by NOT NULL);
+
+ALTER TABLE c_case
+  MODIFY (date_reported NOT NULL);
+
+ALTER TABLE c_outcome
+  MODIFY (o_date NOT NULL);
+
+
+ALTER TABLE c_outcome
+  MODIFY (description NOT NULL);
+
+ALTER TABLE c_travel_destination
+  MODIFY (start_date NOT NULL);
+
+ALTER TABLE c_location
+  MODIFY (city NOT NULL);
+
+ALTER TABLE c_location
+  MODIFY (state_or_provinces NOT NULL);
+
+ALTER TABLE c_cat_event
+  MODIFY (e_date NOT NULL);
+
+
+ALTER TABLE c_cat_event
+  MODIFY (description NOT NULL);
+
+
+ALTER TABLE c_disease
+  MODIFY (name NOT NULL);
+
+
+ALTER TABLE c_disease
+  MODIFY (form_of_transmission NOT NULL);
+
+ALTER TABLE c_symptom_list
+  MODIFY (name NOT NULL);
+
+ALTER TABLE c_symptom_list
+  MODIFY (description NOT NULL);
+
+ALTER TABLE c_region
+  MODIFY (name NOT NULL);
+
+ALTER TABLE c_region
+  MODIFY (geography NOT NULL);
+
+ALTER TABLE c_region
+  MODIFY (continent NOT NULL);
+
+
+ALTER TABLE c_region
+  MODIFY (climat NOT NULL);
+
+ALTER TABLE c_country
+  MODIFY (name NOT NULL);
+
+ALTER TABLE c_country
+  MODIFY (health_center_name NOT NULL);
+
+
+ALTER TABLE c_disease_type
+  MODIFY (name NOT NULL);
+
+ALTER TABLE c_disease_type
+  MODIFY (description NOT NULL);
+
+
+
+
+**************************************drop table
+
+DROP TABLE c_patient CASCADE CONSTRAINTS;
+DROP TABLE c_encounter CASCADE CONSTRAINTS;
+DROP TABLE c_encounter_after_effect CASCADE CONSTRAINTS;
+DROP TABLE c_after_effect CASCADE CONSTRAINTS;
+DROP TABLE c_health_profession CASCADE CONSTRAINTS;
+DROP TABLE c_case CASCADE CONSTRAINTS;
+DROP TABLE c_outcome CASCADE CONSTRAINTS;
+DROP TABLE c_exhibited_symptom CASCADE CONSTRAINTS;
+DROP TABLE c_location CASCADE CONSTRAINTS;
+DROP TABLE c_travel_destination CASCADE CONSTRAINTS;
+DROP TABLE c_cat_event CASCADE CONSTRAINTS;
+DROP TABLE c_disease CASCADE CONSTRAINTS;
+DROP TABLE c_symptom_list CASCADE CONSTRAINTS;
+DROP TABLE c_region CASCADE CONSTRAINTS;
+DROP TABLE c_country CASCADE CONSTRAINTS;
+DROP TABLE c_disease_type CASCADE CONSTRAINTS;
+DROP TABLE c_expected_symptom CASCADE CONSTRAINTS;
+
+
+

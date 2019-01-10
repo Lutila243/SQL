@@ -1,0 +1,145 @@
+*view the table structure
+
+DESC table_name;
+
+
+**view the existing tables
+
+SELECT table_name
+FROM user_tables;
+
+*verify default and virtual columns settings
+
+SELECT column_name, data_type, data_default
+FROM user_tab_columns
+WHERE table_name = '';
+
+
+***verify index
+
+SELECT table_name, index_name, index_type
+FROM user_indexes
+WHERE table_name = '';
+
+****querying user_indexes
+
+SELECT table_name, index_name, column_name
+FROM user_ind_columns
+WHERE table_name = '';
+
+****view constraints information
+
+
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM user_constraints
+WHERE table_name = ''
+
+
+**verify constraints
+
+SELECT constraint_name, column_name
+FROM user_cons_columns
+WHERE table_name = '';
+
+**verify the existing sequences
+
+SELECT object_name
+FROM user_objects
+WHERE object_type = 'SEQUENCE';
+
+*verify that sequences are removed
+
+SELECT *
+FROM user_sequences;
+
+
+*** use the dual table
+
+
+SELECT SYSDATE
+FROM DUAL;
+
+
+
+***create index
+
+CREATE INDEX criminals_last_idx
+on criminals (last);
+
+CREATE INDEX criminals_street_idx
+on criminals (street);
+
+CREATE INDEX criminals_phone_idx
+on criminals (phone);
+
+
+
+****create a descending sort for index values
+
+CREATE INDEX crimimals-zip_desc_idx
+ON  criminals (zip DESC);
+
+
+***concatenated index
+
+CREATE INDEX criminals_contact_idx
+on criminals (last, street, phone);
+
+
+
+***************************************************
+
+
+CREATE  SEQUENCE criminals_criminal#_seq
+INCREMENT BY 1
+START WITH 1017
+NOCACHE
+NOCYCLE;
+
+
+CREATE  SEQUENCE crimes_crime#_seq
+INCREMENT BY 1
+START WITH 1000
+NOCACHE
+NOCYCLE;
+
+
+
+INSERT INTO criminals ( criminal_id, last, first, street, city, state, zip, phone, v_status, p_status, mail_flag)
+
+VALUES (criminals_criminal#_seq.NEXTVAL, 'Capps', 'Johnny', '11 wall st', 'berlin', 'MA', '34564', '', '', '', 'Y');
+
+
+
+
+INSERT INTO crimes( crime_id, criminal_id, classification, date_charged, status, hearing_date, appeal_cut_date)
+
+VALUES (crimes_crime#_seq.NEXTVAL, 1017, 'M',NULL, 'CL', NULL, NULL);
+
+
+
+
+
+SELECT last, street, phone
+FROM criminals
+WHERE criminal_id = 1015, 1016, 1017;
+
+
+
+Yes because the bitmap index structure can be particulary useful in the queries involving conpound conditions (using AND ans OR).
+For example a WHERE clause might attempt to identify all Classification Column with the CL Status.
+In this type of query, if a bit map index exists on the both columns, the bitmap index information 
+for the two columns Values (classification = 'M', status = 'CL' ) can be combines to identify the rows to be queried from the table.
+
+
+
+Yes because a synonym is a alternative name or alias for a database object, such as a table or a sequence.
+A synonym is used for several reasons:
+
+- A synonym gives you the convenience of not having a full object name,
+including the schema name, if required.
+
+- A synonym hides the actual object name, which can improve security.
+
+-Synomym help minimize application modification by allowing the alias to be used in the application code.
+when object changes, for example), you don't have to change the application code; instead, you can modify the synonym to identify the correct object.
